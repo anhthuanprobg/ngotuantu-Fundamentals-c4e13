@@ -18,34 +18,78 @@ destinations = [
     {"x": 4,"y": 3 }
 ]
 
-for y in range(map["size_y"]):
-    for x in range(map["size_x"]):
-        
-        
-        box_is_here = False
-        for box in boxes:
-            if box['x'] == x and box['y'] == y:
-                box_is_here = True
-        
-        player_is_here = False
-        if x == player['x'] and y == player['y']:
-            player_is_here = True
-        
-        dest_is_here = False
-        for dest in destinations:
-            if dest['x'] == x and dest['y'] ==y:
-                dest_is_here = True
+playing = True
+while playing:
+# print map
 
 
-        if player_is_here == True:
-            print("P ", end="")
-        elif box_is_here == True:
-            print("B ", end="")
-        elif dest_is_here == True:
-            print("D", end="")
-        else:
-            print("- ", end="")
-        
+    for y in range(map["size_y"]):
+        for x in range(map["size_x"]):
+            
+            
+            box_is_here = False
+            for box in boxes:
+                if box['x'] == x and box['y'] == y:
+                    box_is_here = True
+            
+            player_is_here = False
+            if x == player['x'] and y == player['y']:
+                player_is_here = True
+            
+            dest_is_here = False
+            for dest in destinations:
+                if dest['x'] == x and dest['y'] ==y:
+                    dest_is_here = True
 
-    print()
+
+            if player_is_here == True:
+                print("P ", end="")
+            elif box_is_here == True:
+                print("B ", end="")
+            elif dest_is_here == True:
+                print("D ", end="")
+            else:
+                print("- ", end="")
+            
+
+        print()
+    # end of print map 
+    win = True
+    for box in boxes:
+        if box not in destinations:
+            win = False
+            
+    if win == True:
+        print("You win !!!")
+        break
+    
+    move = input("Your move: ").lower()
+
+    dx = 0
+    dy = 0
+    if move == "w":
+        dy = -1
+    elif move == "s":
+        dy = 1
+    elif move == "a":
+        dx = -1
+    elif move == "d":
+        dx = 1
+    else:
+        print("Ezzz")
+        playing = False
+
+    if 0<=player["x"] +dx < map["size_x"]  \
+    and 0<= player["y"] +dy < map["size_y"]: 
+
+        player["x"] +=dx
+        player["y"] +=dy
+
+    for box in boxes:
+        if box["x"] == player["x"] and box["y"] == player["y"]:
+            box["x"] +=dx
+            box["y"] +=dy
+    count = 0
+
+    
 
